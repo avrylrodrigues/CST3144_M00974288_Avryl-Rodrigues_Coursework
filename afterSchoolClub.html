@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>After School Club</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <div id="app">
+            <header>
+                <h1 v-text="sitename"></h1>
+                <button v-on:click="showCheckout">
+                    {{ cartItemCount }}
+                    <span class="fas fa-cart-plus"></span>
+                    Checkout
+                </button>
+            </header>
+            <main>
+                <div v-if="showLesson">
+                    <figure>
+                        <img v-bind:src="lesson.Icon" width="150px" height="150px">
+                    </figure>
+                    <h2 v-text="lesson.Subject"></h2>
+                    <p v-text="lesson.Location"></p>
+                    <p>Price: {{lesson.Price}}</p>
+                    <p>Available seats: {{lesson.availableSeats}}</p>
+                    <button v-on:click="addToCart" v-if="canAddToCart">
+                        Add to Cart
+                    </button>
+                    <button disabled="disabled" v-else>
+                        Add to Cart
+                    </button>
+                </div>
+                <div v-else>
+                    <h2>Checkout</h2>
+                </div>
+            </main>
+        </div>
+
+        <script type="text/javascript">
+            var webstore = new Vue ({
+                el:"#app",
+                data:{
+                    sitename:"After School Club",
+                    lesson:{
+                        id:1001,
+                        Subject:"Music",
+                        Location:"Dubai",
+                        Price:500,
+                        Icon:"images/music.png",
+                        availableSeats:5
+                    },
+                    cart:[],
+                    showLesson: true,
+                },
+                methods:{
+                    addToCart:function(){
+                        this.cart.push(this.lesson.id);
+                        this.lesson.availableSeats -= 1;
+                    },
+                    showCheckout(){
+                        this.showLesson = this.showLesson ? false : true;
+                    }
+                },
+                computed:{
+                    cartItemCount:function(){
+                        return this.cart.length || "";
+                    },
+                    canAddToCart:function(){
+                        return this.lesson.availableSeats>0;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
