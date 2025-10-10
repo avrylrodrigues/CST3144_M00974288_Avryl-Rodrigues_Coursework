@@ -36,6 +36,47 @@
                 </div>
                 <div v-else>
                     <h2>Checkout</h2>
+                    <p>
+                        <strong>First name:</strong>
+                        <input v-model.trim="order.firstName"/>
+                    </p>
+                    <p>
+                        <strong>Last name:</strong>
+                        <input v-model.trim="order.lastName"/>
+                    </p>
+                    <p>
+                        <strong>Phone number:</strong>
+                        <input v-model.trim="order.phoneNumber"/>
+                    </p>
+                    <p>
+                        <strong>Email:</strong>
+                        <input v-model.trim="order.email"/>
+                    </p>
+                    <p>
+                        <strong>Address:</strong>
+                        <input v-model.trim="order.address"/>
+                    </p>
+                    <p>
+                        <strong>City:</strong>
+                        <input v-model.trim="order.city"/>
+                    </p>
+                    <p>
+                        <strong>Emirate:</strong>
+                        <select v-model.trim="order.emirate" class="form.control">
+                            <option disabled value="">Select emirate</option>
+                            <option v-for="(emirate, key) in emirates" v-bind:value="emirate">{{key}}</option>
+                        </select>
+                    </p>
+
+                    <h2>Order Information</h2>
+                    <p>First name: {{order.firstName}}</p>
+                    <p>Last name: {{order.lastName}}</p>
+                    <p>Phone number: {{order.phoneNumber}}</p>
+                    <p>Email: {{order.email}}</p>
+                    <p>Address: {{order.address}}</p>
+                    <p>City: {{order.city}}</p>
+                    <p>Emirate: {{order.emirate}}</p>
+                    <button v-on:click="submitForm">Place Order</button>
                 </div>
             </main>
         </div>
@@ -55,11 +96,35 @@
                     },
                     cart:[],
                     showLesson: true,
+                    order:{
+                        firstName: "",
+                        lastNmae: "",
+                        phoneNumber: "",
+                        email: "",
+                        address: "",
+                        city: "",
+                        emirate: ""
+                    },
+                    emirates: {
+                        DXB: "Dubai",
+                        AUH: "Abu Dhabi",
+                        SHJ: "Sharjah",
+                        AJM: "Ajman",
+                        FJR: "Fujairah",
+                        RAK: "Ras Al Khaimah",
+                        UAQ: "Umm Al Quwain"
+                    }
                 },
                 methods:{
                     addToCart:function(){
                         this.cart.push(this.lesson.id);
                         this.lesson.availableSeats -= 1;
+                    },
+                    showCheckout(){
+                        this.showLesson = this.showLesson ? false : true;
+                    },
+                    submitForm(){
+                        alert("Registration successful!");
                     },
                     showCheckout(){
                         this.showLesson = this.showLesson ? false : true;
