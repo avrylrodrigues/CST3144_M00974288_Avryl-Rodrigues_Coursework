@@ -5,6 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="lesson.js"></script>
 </head>
 
 <body>
@@ -23,245 +24,32 @@
         <main>
             <div v-if="showLesson" class="lesson-container">
                 <!-- Lesson 1 -->
-                <div class="lesson-box">
+                <div v-for="lesson in sortedLessons" class="lesson-box">
                     <figure>
-                        <img v-bind:src="lesson[0].Icon" width="150" height="150">
+                        <img v-bind:src="lesson.Icon" width="150" height="150">
                     </figure>
-                    <h2 v-text="lesson[0].Subject"></h2>
-                    <p>Location: {{ lesson[0].Location }}</p>
-                    <p>Price: {{ lesson[0].Price }}</p>
-                    <p>Available seats: {{ lesson[0].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[0])" v-if="canAddToCart(lesson[0])">
+                    <h2 v-text="lesson.Subject"></h2>
+                    <p>Location: {{ lesson.Location }}</p>
+                    <p>Price: {{ lesson.Price }}</p>
+                    <p>Available seats: {{ lesson.availableSeats}}</p>
+                    <button v-on:click="addToCart(lesson)" v-if="canAddToCart(lesson)">
                         Add to Cart
                     </button>
                     <button disabled v-else>
                         Add to Cart
                     </button>
+                    <div class="update-messages">
+                        <span v-if="lesson.availableSeats == cartCount(lesson.id)">
+                            All Full!
+                        </span>
+                        <span v-else-if="lesson.availableSeats - cartCount(lesson.id) < 5">
+                            Only {{lesson.availableSeats - cartCount(lesson.id)}} seats left!
+                        </span>
+                        <span v-else>
+                            Book Now!
+                        </span>
+                    </div>
                 </div>
-
-                <!-- Lesson 2 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[1].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[1].Subject"></h2>
-                    <p>Location: {{ lesson[1].Location }}</p>
-                    <p>Price: {{ lesson[1].Price }}</p>
-                    <p>Available seats: {{ lesson[1].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[1])" v-if="canAddToCart(lesson[1])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 3 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[2].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[2].Subject"></h2>
-                    <p>Location: {{ lesson[2].Location }}</p>
-                    <p>Price: {{ lesson[2].Price }}</p>
-                    <p>Available seats: {{ lesson[2].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[2])" v-if="canAddToCart(lesson[2])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 4 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[3].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[3].Subject"></h2>
-                    <p>Location: {{ lesson[3].Location }}</p>
-                    <p>Price: {{ lesson[3].Price }}</p>
-                    <p>Available seats: {{ lesson[3].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[3])" v-if="canAddToCart(lesson[3])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 5 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[4].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[4].Subject"></h2>
-                    <p>Location: {{ lesson[4].Location }}</p>
-                    <p>Price: {{ lesson[4].Price }}</p>
-                    <p>Available seats: {{ lesson[4].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[4])" v-if="canAddToCart(lesson[4])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 6 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[5].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[5].Subject"></h2>
-                    <p>Location: {{ lesson[5].Location }}</p>
-                    <p>Price: {{ lesson[5].Price }}</p>
-                    <p>Available seats: {{ lesson[5].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[5])" v-if="canAddToCart(lesson[5])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 7 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[6].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[6].Subject"></h2>
-                    <p>Location: {{ lesson[6].Location }}</p>
-                    <p>Price: {{ lesson[6].Price }}</p>
-                    <p>Available seats: {{ lesson[6].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[6])" v-if="canAddToCart(lesson[6])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 8 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[7].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[7].Subject"></h2>
-                    <p>Location: {{ lesson[7].Location }}</p>
-                    <p>Price: {{ lesson[7].Price }}</p>
-                    <p>Available seats: {{ lesson[7].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[7])" v-if="canAddToCart(lesson[7])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 9 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[8].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[8].Subject"></h2>
-                    <p>Location: {{ lesson[8].Location }}</p>
-                    <p>Price: {{ lesson[8].Price }}</p>
-                    <p>Available seats: {{ lesson[8].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[8])" v-if="canAddToCart(lesson[8])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 10 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[9].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[9].Subject"></h2>
-                    <p>Location: {{ lesson[9].Location }}</p>
-                    <p>Price: {{ lesson[9].Price }}</p>
-                    <p>Available seats: {{ lesson[9].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[9])" v-if="canAddToCart(lesson[9])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 11 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[10].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[10].Subject"></h2>
-                    <p>Location: {{ lesson[10].Location }}</p>
-                    <p>Price: {{ lesson[10].Price }}</p>
-                    <p>Available seats: {{ lesson[10].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[10])" v-if="canAddToCart(lesson[10])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 12 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[11].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[11].Subject"></h2>
-                    <p>Location: {{ lesson[11].Location }}</p>
-                    <p>Price: {{ lesson[11].Price }}</p>
-                    <p>Available seats: {{ lesson[11].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[11])" v-if="canAddToCart(lesson[11])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 13 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[12].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[12].Subject"></h2>
-                    <p>Location: {{ lesson[12].Location }}</p>
-                    <p>Price: {{ lesson[12].Price }}</p>
-                    <p>Available seats: {{ lesson[12].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[12])" v-if="canAddToCart(lesson[12])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-                <!-- Lesson 14 -->
-                <div class="lesson-box">
-                    <figure>
-                        <img v-bind:src="lesson[13].Icon" width="150" height="150">
-                    </figure>
-                    <h2 v-text="lesson[13].Subject"></h2>
-                    <p>Location: {{ lesson[13].Location }}</p>
-                    <p>Price: {{ lesson[13].Price }}</p>
-                    <p>Available seats: {{ lesson[13].availableSeats }}</p>
-                    <button v-on:click="addToCart(lesson[13])" v-if="canAddToCart(lesson[13])">
-                        Add to Cart
-                    </button>
-                    <button disabled v-else>
-                        Add to Cart
-                    </button>
-                </div>
-
-            </div>
-
             <!-- Checkout Section -->
             <div v-else class="checkout">
                 <h2>Checkout</h2>
@@ -316,120 +104,7 @@
             el: "#app",
             data: {
                 sitename: "After School Club",
-                lesson: [
-                    {
-                        id: 1001,
-                        Subject: "Music",
-                        Location: "Dubai",
-                        Price: 500,
-                        Icon: "images/music.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1002,
-                        Subject: "Football",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/football.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1003,
-                        Subject: "Crafts",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/crafts.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1004,
-                        Subject: "Gymnastics",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/gymnastics.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1005,
-                        Subject: "Cooking",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/cooking.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1006,
-                        Subject: "Photography",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/photography.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1007,
-                        Subject: "Writing",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/writing.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1008,
-                        Subject: "Theatre",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/theatre.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1009,
-                        Subject: "Badminton",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/badminton.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1010,
-                        Subject: "Dance",
-                        Location: "Dubai",
-                        Price: 450,
-                        Icon: "images/dance.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1011,
-                        Subject: "Gaming",
-                        Location: "Dubai",
-                        Price: 450,
-                        Icon: "images/gaming.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1012,
-                        Subject: "Art",
-                        Location: "Dubai",
-                        Price: 250,
-                        Icon: "images/art.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1013,
-                        Subject: "Yoga",
-                        Location: "Dubai",
-                        Price: 450,
-                        Icon: "images/yoga.png",
-                        availableSeats: 5
-                    },
-                    {
-                        id: 1014,
-                        Subject: "Film Making",
-                        Location: "Dubai",
-                        Price: 450,
-                        Icon: "images/film-making.png",
-                        availableSeats: 5
-                    }
-                ],
+                lessons: lesson,
                 cart: [],
                 showLesson: true,
                 order: {
@@ -454,7 +129,7 @@
             methods: {
                 addToCart(lesson) {
                     this.cart.push(lesson.id);
-                    lesson.availableSeats -= 1;
+                    // lesson.availableSeats -= 1;
                 },
                 showCheckout(){
                     this.showLesson = this.showLesson ? false : true;
@@ -462,20 +137,36 @@
                 submitForm() {
                     alert("Registration successful!");
                 },
+                canAddToCart(lesson) {
+                    return lesson.availableSeats>this.cartCount(lesson.id);
+                },
+                cartCount(id) {
+                    let count = 0;
+                    for(let i = 0; i < this.cart.length; i++){
+                            if (this.cart[i] == id) {
+                                count++;
+                            }
+                        }
+                        return count;
+                }
             },
             computed: {
                 cartItemCount:function() {
                     return this.cart.length || "";
                 },
-                canAddToCart() {
-                    return (lesson) => lesson.availableSeats > 0;
+                sortedLessons(){
+                    let lessonsArray = this.lessons.slice(0);
+                    function compare(a, b) {
+                        if (a.Price > b.Price)
+                            return 1;
+                        if (a.Price < b.Price)
+                            return -1;
+                        return 0;
+                        // swap 1 and -1 if we want descemding order
+                    }
+                    return lessonsArray.sort(compare);
                 }
             }
-            // computed: {
-            //     canAddToCart:function(){
-            //         return this.product.availableInventory>this.cartItemCount;
-            //     }
-            // }
         });
     </script>
 </body>
