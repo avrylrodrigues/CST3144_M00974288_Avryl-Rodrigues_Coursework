@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles.css">
     <script src="lesson.js"></script>
 </head>
-
 <body>
     <div id="app">
         <header>
@@ -20,7 +19,6 @@
                 </button>
             </div>
         </header>
-
         <main>
             <div v-if="showLesson" class="lesson-container">
                 <div v-for="lesson in sortedLessons" class="lesson-box">
@@ -50,33 +48,51 @@
                     </div>
                 </div>
             </div>
-            <div v-else class="checkout-container">
-                <div class="checkout-details">
-                    <h2>Checkout</h2>
-                    <p>
-                        <strong>Full name:</strong>
-                        <input v-model.trim="order.fullName" />
-                    </p>
-                    <p>
-                        <strong>Phone number:</strong>
-                        <input v-model.trim="order.phoneNumber" />
-                    </p>
-                    <p>
-                        <strong>Email:</strong>
-                        <input v-model.trim="order.email" />
-                    </p>
+            <div v-else>
+                <div class="checkout-lesson-container">
+                        <div v-for="lesson in cartLessons" class="lesson-box">
+                            <figure>
+                                <img v-bind:src="lesson.Icon" width="150" height="150">
+                            </figure>
+                            <h2 v-text="lesson.Subject"></h2>
+                            <p>Location: {{ lesson.Location }}</p>
+                            <p>Price: {{ lesson.Price }}</p>
+                            <p>Seats Booked: {{ cartCount(lesson.id) }}</p>
+                            <button v-on:click="removeFromCart(lesson)">
+                                Remove from Cart
+                            </button>
+                        </div>
                 </div>
-                <div class="order-info">
-                    <h2>Order Information</h2>
-                    <p>Full name: {{ order.fullName }}</p>
-                    <p>Phone number: {{ order.phoneNumber }}</p>
-                    <p>Email: {{ order.email }}</p>
+                <div class="checkout-container">
+                    <div class="checkout-details">
+                        <h2>Checkout</h2>
+                        <p>
+                            <strong>Full name:</strong>
+                            <input v-model.trim="order.fullName" />
+                        </p>
+                        <p>
+                            <strong>Phone number:</strong>
+                            <input v-model.trim="order.phoneNumber" />
+                        </p>
+                        <p>
+                            <strong>Email:</strong>
+                            <input v-model.trim="order.email" />
+                        </p>
+                    </div>
+
+                    <div class="order-info">
+                        <h2>Order Information</h2>
+                        <p>Full name: {{ order.fullName }}</p>
+                        <p>Phone number: {{ order.phoneNumber }}</p>
+                        <p>Email: {{ order.email }}</p>
+                    </div>
                 </div>
-                <button v-on:click="submitForm">Checkout</button>
+                <div class="checkout-button-container">
+                    <button v-on:click="submitForm" v-bind:disabled="isCheckoutDisabled">Checkout</button>
+                </div>
             </div>
         </main>
     </div>
-
     <script type="text/javascript">
         var webstore = new Vue({
             el: "#app",
@@ -109,11 +125,17 @@
                 cartCount(id) {
                     let count = 0;
                     for(let i = 0; i < this.cart.length; i++){
-                            if (this.cart[i] == id) {
-                                count++;
-                            }
+                        if (this.cart[i] == id) {
+                            count++;
                         }
-                        return count;
+                    }
+                    return count;
+                },
+                removeFromCart(lesson) {
+                    const index = this.cart.indexOf(lesson.id);
+                    if (index !== -1) {
+                        this.cart.splice(index, 1);
+                    }
                 }
             },
             computed: {
@@ -134,7 +156,35 @@
                 },
                 isCartEmpty(){
                     return this.cart.length === 0;
-                }
+                },
+                isCheckoutDisabled() {
+                    let name = this.order.fullName.trim();
+                    let phone = this.order.phoneNumber.trim();
+                    let email = this.order.email.trim();
+                    if (name === "" || phone === "" || email === "") return true;
+                    for (let i = 0; i < name.length; i++) {
+                        let char = name[i];
+                        if (!((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || char === ' ')) {
+                            return true;
+                        }
+                    }
+                    if (isNaN(phone)){
+                        return true;
+                    }
+                    if (!email.includes("@") || !email.includes(".com")) {
+                        return true;
+                    }
+                    return false;
+                },
+                cartLessons() {
+                    let uniqueLessons = [];
+                    this.lessons.forEach(lesson => {
+                        if (this.cart.includes(lesson.id)) {
+                            uniqueLessons.push(lesson);
+                        }
+                    });
+                    return uniqueLessons;
+                },
             }
         });
     </script>
