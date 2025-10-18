@@ -13,7 +13,7 @@
         <header>
             <div class="header-left">
                 <h1 v-text="sitename"></h1>
-                <button v-on:click="showCheckout">
+                <button v-on:click="showCheckout" v-bind:disabled="isCartEmpty">
                     {{ cartItemCount }}
                     <span class="fas fa-cart-plus"></span>
                     Cart
@@ -23,7 +23,6 @@
 
         <main>
             <div v-if="showLesson" class="lesson-container">
-                <!-- Lesson 1 -->
                 <div v-for="lesson in sortedLessons" class="lesson-box">
                     <figure>
                         <img v-bind:src="lesson.Icon" width="150" height="150">
@@ -31,7 +30,7 @@
                     <h2 v-text="lesson.Subject"></h2>
                     <p>Location: {{ lesson.Location }}</p>
                     <p>Price: {{ lesson.Price }}</p>
-                    <p>Available seats: {{ lesson.availableSeats}}</p>
+                    <p>Available seats: {{ lesson.availableSeats - cartCount(lesson.id) }}</p>
                     <button v-on:click="addToCart(lesson)" v-if="canAddToCart(lesson)">
                         Add to Cart
                     </button>
@@ -50,51 +49,30 @@
                         </span>
                     </div>
                 </div>
-            <!-- Checkout Section -->
-            <div v-else class="checkout">
-                <h2>Checkout</h2>
-                <p>
-                    <strong>First name:</strong>
-                    <input v-model.trim="order.firstName" />
-                </p>
-                <p>
-                    <strong>Last name:</strong>
-                    <input v-model.trim="order.lastName" />
-                </p>
-                <p>
-                    <strong>Phone number:</strong>
-                    <input v-model.trim="order.phoneNumber" />
-                </p>
-                <p>
-                    <strong>Email:</strong>
-                    <input v-model.trim="order.email" />
-                </p>
-                <p>
-                    <strong>Address:</strong>
-                    <input v-model.trim="order.address" />
-                </p>
-                <p>
-                    <strong>City:</strong>
-                    <input v-model.trim="order.city" />
-                </p>
-                <p>
-                    <strong>Emirate:</strong>
-                    <select v-model.trim="order.emirate" class="form-control">
-                        <option disabled value="">Select emirate</option>
-                        <option v-for="(emirate, key) in emirates" v-bind:value="emirate">{{ key }}</option>
-                    </select>
-                </p>
-
-                <h2>Order Information</h2>
-                <p>First name: {{ order.firstName }}</p>
-                <p>Last name: {{ order.lastName }}</p>
-                <p>Phone number: {{ order.phoneNumber }}</p>
-                <p>Email: {{ order.email }}</p>
-                <p>Address: {{ order.address }}</p>
-                <p>City: {{ order.city }}</p>
-                <p>Emirate: {{ order.emirate }}</p>
-
-                <button v-on:click="submitForm">Place Order</button>
+            </div>
+            <div v-else class="checkout-container">
+                <div class="checkout-details">
+                    <h2>Checkout</h2>
+                    <p>
+                        <strong>Full name:</strong>
+                        <input v-model.trim="order.fullName" />
+                    </p>
+                    <p>
+                        <strong>Phone number:</strong>
+                        <input v-model.trim="order.phoneNumber" />
+                    </p>
+                    <p>
+                        <strong>Email:</strong>
+                        <input v-model.trim="order.email" />
+                    </p>
+                </div>
+                <div class="order-info">
+                    <h2>Order Information</h2>
+                    <p>Full name: {{ order.fullName }}</p>
+                    <p>Phone number: {{ order.phoneNumber }}</p>
+                    <p>Email: {{ order.email }}</p>
+                </div>
+                <button v-on:click="submitForm">Checkout</button>
             </div>
         </main>
     </div>
@@ -108,28 +86,16 @@
                 cart: [],
                 showLesson: true,
                 order: {
-                    firstName: "",
-                    lastName: "",
+                    fullName: "",
                     phoneNumber: "",
-                    email: "",
-                    address: "",
-                    city: "",
-                    emirate: ""
-                },
-                emirates: {
-                    DXB: "Dubai",
-                    AUH: "Abu Dhabi",
-                    SHJ: "Sharjah",
-                    AJM: "Ajman",
-                    FJR: "Fujairah",
-                    RAK: "Ras Al Khaimah",
-                    UAQ: "Umm Al Quwain"
+                    email: ""
                 }
             },
             methods: {
                 addToCart(lesson) {
-                    this.cart.push(lesson.id);
-                    // lesson.availableSeats -= 1;
+                    if (lesson.availableSeats > this.cartCount(lesson.id)){
+                        this.cart.push(lesson.id);
+                    }
                 },
                 showCheckout(){
                     this.showLesson = this.showLesson ? false : true;
@@ -165,6 +131,9 @@
                         // swap 1 and -1 if we want descemding order
                     }
                     return lessonsArray.sort(compare);
+                },
+                isCartEmpty(){
+                    return this.cart.length === 0;
                 }
             }
         });
