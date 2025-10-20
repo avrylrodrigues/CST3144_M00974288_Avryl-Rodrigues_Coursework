@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>After School Club</title>
+    <title> After School Club </title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
@@ -13,7 +13,7 @@
             <div class="header-left">
                 <h1 v-text="sitename"></h1>
                 <button v-on:click="showCheckout" v-bind:disabled="isCartEmpty">
-                    {{ cartItemCount }}
+                    {{cartItemCount}}
                     <span class="fas fa-cart-plus"></span>
                     Cart
                 </button>
@@ -26,9 +26,9 @@
                         <img v-bind:src="lesson.Icon" width="150" height="150">
                     </figure>
                     <h2 v-text="lesson.Subject"></h2>
-                    <p>Location: {{ lesson.Location }}</p>
-                    <p>Price: {{ lesson.Price }}</p>
-                    <p>Available seats: {{ lesson.availableSeats - cartCount(lesson.id) }}</p>
+                    <p> Location: {{lesson.Location}} </p>
+                    <p> Price: {{lesson.Price}} </p>
+                    <p> Available seats: {{lesson.availableSeats - cartCount(lesson.id)}} </p>
                     <button v-on:click="addToCart(lesson)" v-if="canAddToCart(lesson)">
                         Add to Cart
                     </button>
@@ -50,45 +50,46 @@
             </div>
             <div v-else>
                 <div class="checkout-lesson-container">
-                        <div v-for="lesson in cartLessons" class="lesson-box">
-                            <figure>
-                                <img v-bind:src="lesson.Icon" width="150" height="150">
-                            </figure>
-                            <h2 v-text="lesson.Subject"></h2>
-                            <p>Location: {{ lesson.Location }}</p>
-                            <p>Price: {{ lesson.Price }}</p>
-                            <p>Seats Booked: {{ cartCount(lesson.id) }}</p>
-                            <button v-on:click="removeFromCart(lesson)">
-                                Remove from Cart
-                            </button>
-                        </div>
+                    <div v-for="lesson in cartLessons" class="lesson-box">
+                        <figure>
+                            <img v-bind:src="lesson.Icon" width="150" height="150">
+                        </figure>
+                        <h2 v-text="lesson.Subject"></h2>
+                        <p>Location: {{lesson.Location}}</p>
+                        <p>Price: {{lesson.Price}}</p>
+                        <p>Seats Booked: {{cartCount(lesson.id)}}</p>
+                        <button v-on:click="removeFromCart(lesson)">
+                            Remove from Cart
+                        </button>
+                    </div>
                 </div>
                 <div class="checkout-container">
                     <div class="checkout-details">
-                        <h2>Checkout</h2>
+                        <h2> Checkout </h2>
                         <p>
-                            <strong>Full name:</strong>
+                            <strong> Full name: </strong>
                             <input v-model.trim="order.fullName" />
                         </p>
                         <p>
-                            <strong>Phone number:</strong>
+                            <strong> Phone number: </strong>
                             <input v-model.trim="order.phoneNumber" />
                         </p>
                         <p>
-                            <strong>Email:</strong>
+                            <strong> Email: </strong>
                             <input v-model.trim="order.email" />
                         </p>
                     </div>
-
                     <div class="order-info">
-                        <h2>Order Information</h2>
-                        <p>Full name: {{ order.fullName }}</p>
-                        <p>Phone number: {{ order.phoneNumber }}</p>
-                        <p>Email: {{ order.email }}</p>
+                        <h2> Order Information </h2>
+                        <p> Full name: {{order.fullName}} </p>
+                        <p> Phone number: {{order.phoneNumber}} </p>
+                        <p> Email: {{order.email}} </p>
                     </div>
                 </div>
                 <div class="checkout-button-container">
-                    <button v-on:click="submitForm" v-bind:disabled="isCheckoutDisabled">Checkout</button>
+                    <button v-on:click="submitForm" v-bind:disabled="isCheckoutDisabled">
+                        Checkout
+                    </button>
                 </div>
             </div>
         </main>
@@ -96,55 +97,52 @@
     <script type="text/javascript">
         var webstore = new Vue({
             el: "#app",
-            data: {
+            data:{
                 sitename: "After School Club",
                 lessons: lesson,
                 cart: [],
                 showLesson: true,
-                order: {
+                order:{
                     fullName: "",
                     phoneNumber: "",
                     email: ""
                 }
             },
-            methods: {
-                addToCart(lesson) {
-                    if (lesson.availableSeats > this.cartCount(lesson.id)){
+            methods:{
+                addToCart(lesson){
+                    if (lesson.availableSeats > this.cartCount(lesson.id))
                         this.cart.push(lesson.id);
-                    }
                 },
                 showCheckout(){
                     this.showLesson = this.showLesson ? false : true;
                 },
-                submitForm() {
+                submitForm(){
                     alert("Registration successful!");
                 },
-                canAddToCart(lesson) {
+                canAddToCart(lesson){
                     return lesson.availableSeats>this.cartCount(lesson.id);
                 },
-                cartCount(id) {
+                cartCount(id){
                     let count = 0;
                     for(let i = 0; i < this.cart.length; i++){
-                        if (this.cart[i] == id) {
+                        if (this.cart[i] == id)
                             count++;
-                        }
                     }
                     return count;
                 },
-                removeFromCart(lesson) {
+                removeFromCart(lesson){
                     const index = this.cart.indexOf(lesson.id);
-                    if (index !== -1) {
+                    if (index !== -1)
                         this.cart.splice(index, 1);
-                    }
                 }
             },
             computed: {
-                cartItemCount:function() {
+                cartItemCount:function(){
                     return this.cart.length || "";
                 },
                 sortedLessons(){
                     let lessonsArray = this.lessons.slice(0);
-                    function compare(a, b) {
+                    function compare(a, b){
                         if (a.Price > b.Price)
                             return 1;
                         if (a.Price < b.Price)
@@ -157,34 +155,32 @@
                 isCartEmpty(){
                     return this.cart.length === 0;
                 },
-                isCheckoutDisabled() {
+                isCheckoutDisabled(){
                     let name = this.order.fullName.trim();
                     let phone = this.order.phoneNumber.trim();
                     let email = this.order.email.trim();
-                    if (name === "" || phone === "" || email === "") return true;
-                    for (let i = 0; i < name.length; i++) {
+                    if (name === "" || phone === "" || email === "")
+                        return true;
+                    for (let i = 0; i < name.length; i++){
                         let char = name[i];
-                        if (!((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || char === ' ')) {
+                        if (!((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || char === ' '))
                             return true;
-                        }
                     }
-                    if (isNaN(phone)){
+                    if (isNaN(phone))
                         return true;
-                    }
-                    if (!email.includes("@") || !email.includes(".com")) {
+                    if (!email.includes("@") || !email.includes(".com"))
                         return true;
-                    }
                     return false;
                 },
                 cartLessons() {
-                    let uniqueLessons = [];
-                    this.lessons.forEach(lesson => {
-                        if (this.cart.includes(lesson.id)) {
-                            uniqueLessons.push(lesson);
-                        }
-                    });
-                    return uniqueLessons;
-                },
+                    let lessonsInCart = [];
+                    for (let i = 0; i < this.lessons.length; i++){
+                        let lesson = this.lessons[i];
+                        if (this.cart.includes(lesson.id))
+                            lessonsInCart.push(lesson);
+                    }
+                    return lessonsInCart;
+                }
             }
         });
     </script>
