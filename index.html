@@ -20,6 +20,25 @@
             </div>
         </header>
         <main>
+            <div class="filter-sort-container" v-if="showLesson">
+                <div class="filter-section">
+                    <label><strong> Filter by: </strong></label>
+                    <div class="filter-options">
+                        <label><input type="radio" value="" v-model="filterType"> All </label>
+                        <label><input type="radio" value="Subject" v-model="filterType"> Subject </label>
+                        <label><input type="radio" value="Location" v-model="filterType"> Location </label>
+                        <label><input type="radio" value="Price" v-model="filterType"> Price </label>
+                        <label><input type="radio" value="availableSeats" v-model="filterType"> Availability </label>
+                    </div>
+                </div>
+                <div class="sort-section">
+                    <label><strong> Sort by price: </strong></label>
+                    <div class="sort-options">
+                        <label><input type="radio" value="ascending" v-model="sortOrder"> Ascending </label>
+                        <label><input type="radio" value="descending" v-model="sortOrder"> Descending </label>
+                    </div>
+                </div>
+            </div>
             <div v-if="showLesson" class="lesson-container">
                 <div v-for="lesson in sortedLessons" class="lesson-box">
                     <figure>
@@ -102,6 +121,8 @@
                 lessons: lesson,
                 cart: [],
                 showLesson: true,
+                filterType: "",
+                sortOrder: "ascending",
                 order:{
                     fullName: "",
                     phoneNumber: "",
@@ -140,17 +161,39 @@
                 cartItemCount:function(){
                     return this.cart.length || "";
                 },
-                sortedLessons(){
-                    let lessonsArray = this.lessons.slice(0);
-                    function compare(a, b){
-                        if (a.Price > b.Price)
-                            return 1;
-                        if (a.Price < b.Price)
-                            return -1;
-                        return 0;
-                        // swap 1 and -1 if we want descemding order
+                sortedLessons() {
+                    let list = this.lessons.slice();
+                    if (this.filterType === "Subject") {
+                        list = list.filter(function(item) {
+                            return item.Subject.includes("Music");
+                        });
+                    } 
+                    else if (this.filterType === "Location") {
+                        list = list.filter(function(item) {
+                            return item.Location.includes("Dubai");
+                        });
+                    } 
+                    else if (this.filterType === "Price") {
+                        list = list.filter(function(item) {
+                            return item.Price < 50;
+                        });
+                    } 
+                    else if (this.filterType === "availableSeats") {
+                        list = list.filter(function(item) {
+                            return (item.availableSeats - this.cartCount(item.id)) > 0;
+                        }.bind(this));
                     }
-                    return lessonsArray.sort(compare);
+                    if (this.sortOrder === "ascending") {
+                        list.sort(function(a, b) {
+                            return a.Price - b.Price;
+                        });
+                    } 
+                    else if (this.sortOrder === "descending") {
+                        list.sort(function(a, b) {
+                            return b.Price - a.Price;
+                        });
+                    }
+                    return list;
                 },
                 isCartEmpty(){
                     return this.cart.length === 0;
