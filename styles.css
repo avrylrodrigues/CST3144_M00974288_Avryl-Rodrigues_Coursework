@@ -1,4 +1,5 @@
-body {
+/* General page style */
+body{
     background-color: #73548a;
     font-family: "Bookman Old Style", serif;
     color: #ffffff;
@@ -6,18 +7,52 @@ body {
     padding: 0;
 }
 
-header {
+p{
+    font-size: 18px;
+}
+
+input{
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 5px;
+    width: 250px;
+}
+
+button{
+    background-color: #ffffff;
+    color: #9371ab;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button:disabled{
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+html{
+    scrollbar-color: #9371ab #73548a;
+}
+
+/* Header style */
+header{
     position: relative;
     text-align: center;
     padding: 20px 40px 60px;
 }
 
-header h1 {
+header h1{
     font-size: 36px;
     margin: 0;
 }
 
-header button {
+header button{
     position: absolute;
     right: 40px;
     bottom: 15px;
@@ -30,25 +65,25 @@ header button {
     cursor: pointer;
 }
 
-header button .fa-cart-plus {
-  margin-right: 5px;
-  margin-left: 1px;
+header button .fa-cart-plus{
+    margin-right: 5px;
 }
 
-main {
+/* Lesson box style */
+main{
     width: 80%;
     margin: 0 auto;
     padding: 20px;
 }
 
-.lesson-container {
+.lesson-container{
     display: flex;
     justify-content: center;
     gap: 30px;
     flex-wrap: wrap;
 }
 
-.lesson-box {
+.lesson-box{
     background-color: #9371ab;
     border-radius: 15px;
     padding: 30px;
@@ -58,51 +93,19 @@ main {
     box-shadow: 0px 4px 8px #00000033;
 }
 
-.lesson-box img {
+.lesson-box img{
     float: left;
     margin-right: 20px;
     border-radius: 10px;
 }
 
-button {
-    background-color: #ffffff;
-    color: #9371ab;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-button:disabled {
-    background-color: #ccc;
-    color: #666;
-    cursor: not-allowed;
-}
-
-input, select {
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-    margin-top: 5px;
-    width: 250px;
-}
-
-p {
-    font-size: 18px;
-}
-
-html {
-    scrollbar-color: #9371ab #73548a;
-}
-
-.update-messages {
+.update-messages{
     display: inline-block;
     padding-left: 20px;
 }
 
-.checkout-container {
+/* Checkout page style */
+.checkout-container{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -110,11 +113,11 @@ html {
     margin-top: 20px;
 }
 
-.checkout-container h2 {
+.checkout-container h2{
     text-align: center;
 }
 
-.checkout-details, .order-info {
+.checkout-details, .order-info{
     flex: 1;
     height: 300px; 
     padding: 15px;
@@ -126,13 +129,13 @@ html {
     justify-content: flex-start;
 }
 
-.checkout-button-container {
+.checkout-button-container{
     width: 100%;
     text-align: center;
     margin-top: 20px;
 }
 
-.checkout-button-container button {
+.checkout-button-container button{
     padding: 12px 30px;
     font-size: 18px;
     border-radius: 8px;
@@ -143,32 +146,31 @@ html {
     cursor: pointer;
 }
 
-.checkout-button-container button:disabled {
+.checkout-button-container button:disabled{
     background-color: #ccc;
     color: #666;
     cursor: not-allowed;
 }
 
-.checkout-lesson-container {
+.checkout-lesson-container{
     width: 100%;
     display: flex;
-    flex-wrap: nowrap;
     gap: 30px;
     padding: 10px;
     overflow-x: auto;
     overflow-y: hidden;
     border-radius: 15px;
-    background-color: #73548a99;
     margin-bottom: 20px;
 }
 
-.checkout-lesson-container .lesson-box {
+.checkout-lesson-container .lesson-box{
     flex: 0 0 auto;
-    width: 400px;
-    height: 230px;
+    width: 450px;
+    height: 220px;
 }
 
-.filter-sort-container {
+/* Filter and Sort style */
+.filter-sort-container{
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -181,7 +183,7 @@ html {
     width: 70%;
 }
 
-.filter-section, .sort-section {
+.filter-section, .sort-section{
     background-color: #73548a;
     padding: 15px;
     border-radius: 10px;
@@ -189,22 +191,20 @@ html {
     text-align: center;
 }
 
-.filter-options, .sort-options {
+.filter-options, .sort-options{
     display: flex;
     justify-content: center;
-    flex-wrap: nowrap;
     gap: 15px;
     margin-top: 10px;
 }
 
-.filter-options label,
-.sort-options label {
+.filter-options label, .sort-options label{
     font-size: 16px;
     cursor: pointer;
     color: #ffffff;
 }
 
-input[type="radio"] {
+input[type="radio"]{
     accent-color: #9371ab;
     width: 18px;
     height: 18px;

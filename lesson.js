@@ -1,12 +1,16 @@
+// List of lessons
 let lesson = [
+    // Music lesson
     {
-        "id":1001,
-        "Subject":"Music",
-        "Location":"Dubai",
-        "Price":50,
-        "Icon":"images/music.png",
-        "availableSeats":5
+        "id": 1001,                     // Lesson ID
+        "Subject": "Music",             // Lesson name
+        "Location": "Dubai",            // Lesson location
+        "Price": 50,                    // Price
+        "Icon": "images/music.png",     // Lesson icon
+        "availableSeats": 5             // Number of available seats
     },
+
+    // Football lesson
     {
         "id": 1002,
         "Subject": "Football",
@@ -15,6 +19,8 @@ let lesson = [
         "Icon": "images/football.png",
         "availableSeats": 5
     },
+
+    // Crafts lesson
     {
         "id": 1003,
         "Subject": "Crafts",
@@ -23,6 +29,8 @@ let lesson = [
         "Icon": "images/crafts.png",
         "availableSeats": 5
     },
+
+    // Gymnastics lesson
     {
         "id": 1004,
         "Subject": "Gymnastics",
@@ -31,6 +39,8 @@ let lesson = [
         "Icon": "images/gymnastics.png",
         "availableSeats": 5
     },
+
+    // Cooking lesson
     {
         "id": 1005,
         "Subject": "Cooking",
@@ -39,6 +49,8 @@ let lesson = [
         "Icon": "images/cooking.png",
         "availableSeats": 5
     },
+
+    // Photography lesson
     {
         "id": 1006,
         "Subject": "Photography",
@@ -47,6 +59,8 @@ let lesson = [
         "Icon": "images/photography.png",
         "availableSeats": 5
     },
+
+    // Writing lesson
     {
         "id": 1007,
         "Subject": "Writing",
@@ -55,6 +69,8 @@ let lesson = [
         "Icon": "images/writing.png",
         "availableSeats": 5
     },
+
+    // Theatre lesson
     {
         "id": 1008,
         "Subject": "Theatre",
@@ -63,6 +79,8 @@ let lesson = [
         "Icon": "images/theatre.png",
         "availableSeats": 5
     },
+
+    // Badminton lesson
     {
         "id": 1009,
         "Subject": "Badminton",
@@ -71,6 +89,8 @@ let lesson = [
         "Icon": "images/badminton.png",
         "availableSeats": 5
     },
+
+    // Dance lesson
     {
         "id": 1010,
         "Subject": "Dance",
@@ -79,6 +99,8 @@ let lesson = [
         "Icon": "images/dance.png",
         "availableSeats": 5
     },
+
+    // Gaming lesson
     {
         "id": 1011,
         "Subject": "Gaming",
@@ -86,7 +108,10 @@ let lesson = [
         "Price": 90,
         "Icon": "images/gaming.png",
         "availableSeats": 5
-    },{
+    },
+
+    // Art lesson
+    {
         "id": 1012,
         "Subject": "Art",
         "Location": "Fujairah",
@@ -94,6 +119,8 @@ let lesson = [
         "Icon": "images/art.png",
         "availableSeats": 5
     },
+
+    // Yoga lesson
     {
         "id": 1013,
         "Subject": "Yoga",
@@ -102,6 +129,8 @@ let lesson = [
         "Icon": "images/yoga.png",
         "availableSeats": 5
     },
+
+    // Film Making lesson
     {
         "id": 1014,
         "Subject": "Film Making",
