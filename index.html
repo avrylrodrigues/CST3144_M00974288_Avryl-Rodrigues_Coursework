@@ -12,14 +12,11 @@
     <script src="lesson.js"></script>
 </head>
 <body>
-    <!-- Vue app container -->
     <div id="app">
-        <!-- Header section -->
         <header>
             <div class="header-left">
-                <!-- Sitename -->
                 <h1 v-text="sitename"></h1>
-                <!-- Cart button showing number of lessns in cart -->
+                <!-- Cart button showing number of lessons in cart -->
                 <button v-on:click="showCheckout" v-bind:disabled="isCartEmpty">
                     {{cartItemCount}}
                     <span class="fas fa-cart-plus"></span>
@@ -28,7 +25,6 @@
             </div>
         </header>
 
-        <!-- Main content section -->
         <main>
             <!-- Filter and Sort options -->
             <div class="filter-sort-container" v-if="showLesson">
@@ -53,7 +49,7 @@
                 </div>
             </div>
 
-            <!-- Lesson cards -->
+            <!-- Lessons -->
             <div v-if="showLesson" class="lesson-container">
                 <div v-for="lesson in sortedLessons" class="lesson-box">
                     <figure>
@@ -101,7 +97,6 @@
                         <p>Location: {{lesson.Location}}</p>
                         <p>Price: {{lesson.Price}}</p>
                         <p>Seats Booked: {{cartCount(lesson.id)}}</p>
-                        <!-- Remove from cart button -->
                         <button v-on:click="removeFromCart(lesson)">
                             Remove from Cart
                         </button>
@@ -146,14 +141,12 @@
         </main>
     </div>
 
-    <!-- Vue.js app script -->
     <script type="text/javascript">
         var webstore = new Vue({
             el: "#app",
             data:{
-                // Sitename
                 sitename: "After School Club",
-                // Array of lessons loaded from lesson.js
+                // Array of lessons
                 lessons: lesson,
                 // Array to hold lesson IDs added to cart
                 cart: [],
@@ -188,7 +181,7 @@
                 canAddToCart(lesson){
                     return lesson.availableSeats>this.cartCount(lesson.id);
                 },
-                // Count number of a specific lesson in cart
+                // Count number of a specific lessons in cart
                 cartCount(id){
                     let count = 0;
                     for(let i = 0; i < this.cart.length; i++){
@@ -290,7 +283,7 @@
                 isCartEmpty(){
                     return this.cart.length === 0;
                 },
-                // Disable checkout button if form invalid
+                // Disable checkout button if form is invalid
                 isCheckoutDisabled(){
                     let name = this.order.fullName.trim();
                     let phone = this.order.phoneNumber.trim();
